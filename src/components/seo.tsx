@@ -2,14 +2,14 @@ import { graphql, useStaticQuery } from 'gatsby';
 import { Helmet } from 'react-helmet';
 import React from 'react';
 
-/**
- * @param root0
- * @param root0.description
- * @param root0.lang
- * @param root0.meta
- * @param root0.title
- */
-function SEO({ description, lang, meta, title }) {
+interface SEOProps {
+  description?: string;
+  lang?: string;
+  meta?: any;
+  title: string;
+}
+
+export const SEO = ({ description, lang, meta, title }: SEOProps) => {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -67,22 +67,7 @@ function SEO({ description, lang, meta, title }) {
           content: metaDescription,
           name: 'twitter:description',
         },
-      ].concat(meta)}
+      ].concat(meta || {})}
     />
   );
-}
-
-SEO.defaultProps = {
-  lang: 'en',
-  meta: [],
-  description: '',
 };
-
-SEO.propTypes = {
-  description: PropTypes.string,
-  lang: PropTypes.string,
-  meta: PropTypes.arrayOf(PropTypes.object),
-  title: PropTypes.string.isRequired,
-};
-
-export default SEO;
